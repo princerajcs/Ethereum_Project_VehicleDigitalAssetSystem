@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+            
+                    <h1>Vehicle Details</h1>
+            
+                    <label for="name" class="col-lg-2 control-label">Current Driver Name</label>
+                    <input id="name" type="text">
+            
+                    <button id="button">Set Current Driver Name</button>
+                    <h2>vehicleRegistrationNumber= <span id="vehicleRegistrationNumber"></span></h2>
+                    <h2>vehicleEngineNumber= <span id="vehicleEngineNumber"></span></h2>
+                    <h2>vehicleChassisNumber= <span id="vehicleChassisNumber"></span></h2>
+                    <h2>Current Driver Name= <span id="ownerName"></span></h2>
+                    <button id="button2">Get Vehicle Details</button>
+
+            
+            
+                </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+       web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+       web3.eth.defaultAccount = web3.eth.accounts[0];
+       var CoursetroContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "vehicleOwnerName",
+				"type": "string"
+			}
+		],
+		"name": "setOwnerName",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "vehicleRegistrationNumber",
+				"type": "string"
+			},
+			{
+				"name": "vehicleEngineNumber",
+				"type": "string"
+			},
+			{
+				"name": "vehicleChassisNumber",
+				"type": "string"
+			},
+			{
+				"name": "ownerName",
+				"type": "string"
+			},
+			{
+				"name": "vehiclePrice",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getVehicleDetails",
+		"outputs": [
+			{
+				"name": "vehicleRegistrationNumber",
+				"type": "string"
+			},
+			{
+				"name": "vehicleEngineNumber",
+				"type": "string"
+			},
+			{
+				"name": "vehicleChassisNumber",
+				"type": "string"
+			},
+			{
+				"name": "ownerName",
+				"type": "string"
+			},
+			{
+				"name": "vehiclePrice",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+        var Coursetro = CoursetroContract.at('0xddd9885fff24cd082112f73a5febb3094b9194ef');
+        console.log(Coursetro);
+        
+       $("#button").click(function() {
+           Coursetro.setOwnerName($("#name").val());
+       });
+       $("#button2").click(function() {
+           Coursetro.getVehicleDetails(function(error, result){
+           if(!error)
+               {
+                   $("#vehicleRegistrationNumber").html(result[0]);
+                   $("#vehicleEngineNumber").html(result[1]);
+                   $("#vehicleChassisNumber").html(result[2]);
+                   $("#ownerName").html(result[3]);
+                   console.log(result);
+               }
+           else
+               console.error(error);
+       });
+       });
+    </script>
+</body>
+</html>

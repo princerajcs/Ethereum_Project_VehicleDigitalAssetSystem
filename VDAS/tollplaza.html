@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+		<div class="container-plaza">
+				<h1>Welcome to NICE Road Toll Plaza</h1>
+				<hr>
+				<label for="id"><b>Vehicle Indetification Detail</b></label>
+				<input type="text" placeholder="Enter Vehicle Number" name="id" required id="name">
+			
+				<label for="amt"><b>Toll-Tax Amount</b></label>
+				<input type="text" placeholder="Enter Amount" name="amt" required id="toll-tax">
+				
+				</div>
+				<div class="clearfix">
+				  <button type="submit" class="button-plaza" id="button">Collect The Toll Tax</button>
+		</div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+       web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+       web3.eth.defaultAccount = web3.eth.accounts[0];
+       var CoursetroContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_receiver",
+				"type": "address"
+			},
+			{
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "mint",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_receiver",
+				"type": "address"
+			},
+			{
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "send",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_value",
+				"type": "uint32"
+			}
+		],
+		"name": "setValue",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "_value",
+				"type": "uint32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "Sent",
+		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "balances",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "minter",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "value",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+        var Coursetro = CoursetroContract.at('0xfb57c603acee8761fd332224ea9d1ae4bcb5436c');
+        console.log(Coursetro);
+        
+       $("#button").click(function() {
+		   if($("#name").val() == "KA041127"){
+				Coursetro.send('0xAAF4A63f3d85593D772b0CA064724f25Add29877',$("#toll-tax").val()); 
+		   }
+		   else{
+			   alert("Vehicle Number is not Registerd");
+		   }
+                  
+       });
+       /*
+       $("#button2").click(function() {
+           Coursetro.balance(function(error, result){
+           if(!error)
+               {
+                   $("#vehicleRegistrationNumber").html(result[0]);
+                   $("#vehicleEngineNumber").html(result[1]);
+                   $("#vehicleChassisNumber").html(result[2]);
+                   $("#ownerName").html(result[3]);
+                   console.log(result);
+               }
+           else
+               console.error(error);
+       });
+       });*/
+    </script>
+</body>
+</html>

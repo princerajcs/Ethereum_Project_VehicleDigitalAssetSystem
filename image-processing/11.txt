@@ -1,0 +1,23 @@
+#include <iostream>
+#include <string>
+#include <regex>
+
+using namespace std;
+
+int main ()
+{
+  std::string s ("   dl no: :1023456\nsfjhjfngk");
+  std::string s1 (" dl.no:28948540");
+  std::smatch m;
+  std::regex e ("(dl).(no).");
+
+  std::regex_search ( s1, m, e );
+
+  for (unsigned i=0; i<m.size(); ++i) {
+    std::cout << "match " << i << " (" << m[i] << ") ";
+    std::cout << "at position " << m.position(i) << std::endl;
+    cout<<s.substr(m.position(i),s.find('\n'))<<endl;
+  }
+
+  return 0;
+}

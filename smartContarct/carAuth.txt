@@ -1,0 +1,57 @@
+pragma solidity ^0.4.24;
+
+contract vehicleDetails{
+    
+    struct vehicleDetails { 
+        string vehicleRegistrationNumber;
+        string vehicleEngineNumber;
+        string vehicleChassisNumber;
+        string ownerName;
+        uint   vehiclePrice;
+    }
+    vehicleDetails vehicle; 
+    
+    constructor(string vehicleRegistrationNumber, string vehicleEngineNumber, string vehicleChassisNumber, string ownerName, uint vehiclePrice) public
+    {
+        
+        vehicle = vehicleDetails (vehicleRegistrationNumber, vehicleEngineNumber, vehicleChassisNumber, ownerName, vehiclePrice);
+    }
+
+    function setOwnerName (string vehicleOwnerName ) public
+    {
+           vehicle.ownerName = vehicleOwnerName;
+    }
+    
+    function getVehicleDetails() constant returns (string vehicleRegistrationNumber, string vehicleEngineNumber, string vehicleChassisNumber, string ownerName, uint vehiclePrice)
+    {
+        return (vehicle.vehicleRegistrationNumber, vehicle.vehicleEngineNumber, vehicle.vehicleChassisNumber, vehicle.ownerName, vehicle.vehiclePrice);
+    }
+}
+
+contract driverDetails{
+    
+    struct driverDetails { 
+        string driverName;
+        string phoneNumber;
+        string drivingLicenseNumber;
+    }
+    driverDetails driver; 
+    
+    constructor(string driverName, string phoneNumber, string drivingLicenseNumber) public
+    {
+        
+        driver = driverDetails (driverName, phoneNumber, drivingLicenseNumber);
+    }
+    
+    function getDriverDetails() constant returns (string driverName, string phoneNumber, string drivingLicenseNumber)
+    {
+        return (driver.driverName, driver.phoneNumber, driver.drivingLicenseNumber);
+    }
+    
+    function setValue(string driverName, string phoneNumber, string drivingLicenseNumber) {
+        driver.driverName = "driverName";
+        driver.drivingLicenseNumber = "drivingLicenseNumber";
+    }
+    
+}
+

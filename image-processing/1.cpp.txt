@@ -1,0 +1,55 @@
+#include <cstdlib> 
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cstring>
+#include <conio.h>
+
+using namespace std;
+
+int main()
+{   
+
+    ifstream in_stream;           //declaring the file input
+    string filein, search, str, replace; //declaring strings
+    int lines = 0, characters = 0, words = 0; //declaring integers
+    char ch;
+
+    cout << "Enter the name of the file\n";   //Tells user to input a file name
+    cin >> filein;                            //User inputs incoming file name
+    in_stream.open (filein.c_str(), ios::in | ios::binary); //Opens the file
+
+
+    //FIND WORDS
+    cout << "Enter word to search: " <<endl;
+    cin >> search; //User inputs word they want to search
+
+    while (!in_stream.eof())  
+    {
+        getline(in_stream, str); 
+        lines++;                
+        if ((str.find(search, 0)) != string::npos) 
+        {
+            cout << "found at line " << lines << endl;
+        }
+    }
+
+    in_stream.seekg (0, ios::beg);  // the seek goes here to reset the pointer....
+
+    in_stream.seekg (0, ios::beg);  // the seek goes here to reset the pointer.....
+    //COUNT CHARACTERS
+
+    while (!in_stream.eof())      
+    {
+        in_stream.get(ch);    
+        cout << ch;
+        characters ++;      
+    }
+    //COUNT WORDS
+
+    in_stream.close ();               
+
+
+    system("PAUSE");                     
+    return EXIT_SUCCESS;    
+}

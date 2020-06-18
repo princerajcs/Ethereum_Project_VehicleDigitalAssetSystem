@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Driver Details</h1>
+
+        <!--<label for="name" class="col-lg-2 control-label">Driver Name</label>
+        <input id="name" type="text">
+
+        <label for="name" class="col-lg-2 control-label">Phone Number</label>
+        <input id="age" type="text">-->
+
+        <label for="name" class="col-lg-2 control-label">Driver Name</label>
+        <input id="Name" type="text">
+        <label for="name" class="col-lg-2 control-label">Driving License Number</label>
+        <input id="DL" type="text">
+        <button id="button1">Set Driver Details</button>
+
+        <button id="button2">Get Driver Details</button>
+
+        <h2>driverName= <span id="driverName"></span></h2>
+        <h2>drivingLicenseNumber= <span id="drivingLicenseNumber"></span></h2>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script> 
+
+       web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+       web3.eth.defaultAccount = web3.eth.accounts[0];
+       var CoursetroContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "driverName",
+				"type": "string"
+			},
+			{
+				"name": "drivingLicenseNumber",
+				"type": "string"
+			}
+		],
+		"name": "setDriverDetails",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getDriverDetails",
+		"outputs": [
+			{
+				"name": "driverName",
+				"type": "string"
+			},
+			{
+				"name": "phoneNumber",
+				"type": "string"
+			},
+			{
+				"name": "drivingLicenseNumber",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "driverName",
+				"type": "string"
+			},
+			{
+				"name": "phoneNumber",
+				"type": "string"
+			},
+			{
+				"name": "drivingLicenseNumber",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	}
+]);
+        var Coursetro = CoursetroContract.at('0x9852c75eef963d1efb0497ac819b84c3cb1d0bd5');
+        console.log(Coursetro);
+    
+       $("#button1").click(function() {
+           Coursetro.setDriverDetails($("#Name").val(),$("#DL").val());
+       });
+
+       $("#button2").click(function() {
+           Coursetro.getDriverDetails(function(error, result){
+           if(!error)
+               {
+                   $("#driverName").html(result[0]);
+                   $("#phoneNumber").html(result[1]);
+                   $("#drivingLicenseNumber").html(result[2]);
+                   console.log(result);
+               }
+           else
+               console.error(error);
+       });
+       });
+       
+       /*fs.readFile('C:\Users\ITAdmin\Desktop\VDAS\image\pgms\Output\DL.txt', 'utf-8', (err, data) => { 
+            if (err) throw err; 
+  
+            console.log(data); 
+        });*/
+    </script>
+</body>
+</html>
